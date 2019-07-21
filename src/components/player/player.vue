@@ -61,7 +61,7 @@
 				</div>
 				<div class="operators">
 					<div class="icon i-left" >
-              			<i class="icon-sequence"></i>
+              			<i :class= "`icon-${modeName}`" @click = "changeMode"></i>
             		</div>
 					<div class="icon i-left">
 						<i class="icon-prev" @click = "prevSong"></i>
@@ -104,7 +104,8 @@
 		</transition>
 		<audio :src = "currentSong.url"
 					 ref = "audio"
-					 @timeupdate = "timeupdate">
+					 @timeupdate = "timeupdate"
+					 @ended="songEnded">
 		</audio>
 	</div>
 </template>
@@ -112,19 +113,25 @@
 
 <script>
 import 	Scroll from 'base/better-scroll/scroll'
-import { mapGetters, mapMutations } from 'vuex'
+import { mapGetters, mapMutations, mapActions } from 'vuex'
 import animations  from 'create-keyframe-animation'
 import { getSumOffset } from 'common/js/domOps'
 import { prefixStyle } from 'common/js/domOps'
 import ProgressBar from 'base/progress-bar/progress-bar'
+import { StatusChange } from 'common/js/tools'
+import { playMode } from 'common/js/config'
+import { getLyric } from 'api/song'
 
 const TRANSFORM = prefixStyle('transform')
 
 export default {
+	created () {
+		console.log('player created!')
+	},
 	data () {
 		return {
 			currentTime: 0,
-			percentage: 0
+			percentage: 0,
 		}
 	},
 	computed: {
@@ -137,12 +144,24 @@ export default {
 		cdRotate () {
 			return this.playing ? 'play' : 'play pause'
 		},
+		modeName () {
+			const mode = this.mode
+			for(let key in playMode) {
+				if(mode === playMode[key])
+				{
+					console.log(key)
+					return key
+				}
+			}
+			return false
+		},
 		...mapGetters ([
 			'playList',
 			'fullscreen',
 			'currentSong',
 			'playing',
-			'currentIndex'
+			'currentIndex',
+			'mode'
 		])
 	},
 	methods: {
@@ -235,6 +254,15 @@ export default {
 			this.currentTime = e.target.currentTime
 			this.percentage = this.currentTime / this.currentSong.duration
 		},
+		songEnded (e) {
+			if(this.mode === playMode.loop) {
+				// 如果是单曲循环就将播放时间重置为0，然后继续播放。
+				this.$refs.audio.currentTime = 0
+				this.$refs.audio.play()
+			} else {
+				this.nextSong()
+			}
+		},
 		dragBar (per) {
 			this._updateCurrTime(per)
 			this.$refs.audio.currentTime = this.currentTime
@@ -244,6 +272,24 @@ export default {
 		},
 		draggingBar (per) {
 			this._updateCurrTime(per)
+		},
+		changeMode() {
+			const modes = []
+			for(let key in playMode) {
+				modes.push(playMode[key])
+			}
+			this.gen = this.gen || StatusChange(playMode.sequence, ...modes)
+			let { g } = this.gen
+			this.setPlayMode(g.next().value)
+		},
+		_getLyric () {
+			const mid = this.currentSong.mid
+			console.log(mid)
+			getLyric (mid).then( (res)=> {
+					console.log(`/////////////////////////////////////`)
+					console.log(res)
+
+			})
 		},
 		_updateCurrTime (per) {
 			this.currentTime = per * this.currentSong.duration
@@ -273,8 +319,12 @@ export default {
 		...mapMutations({
 			setFullscreen: 'SET_FULLSCREEN',
 			setPlayingState: 'SET_PLAYING',
-			setCurrentIndex: 'SET_CURRENTINDEX'
-		})
+			setCurrentIndex: 'SET_CURRENTINDEX',
+			// setPlayMode: 'SET_MODE'
+		}),
+		...mapActions([
+			'setPlayMode'
+		])
 	},
 	filters: {
 		formatTime (time) { // 格式化时间 sec -> min : 0sec
@@ -287,9 +337,17 @@ export default {
 		}
 	},
 	watch: {
-		currentSong () {
+		currentSong (newVal, oldVal) {
 			this.$nextTick(()=>{
+				console.log(this.currentSong.getLyric())
 				// 如果当前状态为paused,当切换下一首歌的时候，不再暂停，直接播放。
+				if(newVal.id === oldVal.id) {
+					// 当切换模式的时候，尽管已经在actions中保证当前歌曲不会变化，但是
+					// 依旧还是改变了currentSong中的state.playList的地址，所以还是无法避免的会触发currentSong的
+					// user Watcher, 因此我们需要为了保证暂停状态不会因为切换模式而取消，我们需要额外判断劫持
+					// 播放操作
+					return
+				}
 				this.$refs.audio.play()
 			})
 		},
