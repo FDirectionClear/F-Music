@@ -7,7 +7,7 @@
 
 核心技术栈： VueJS + Vuex + Vue-router + Webpack + 极少量JQuery + github上的一些开源工具 + 本人全力质量coding。(并没有使用Vue-cli，自己原生配置webpack)
 
-开发状态：pending...... （播放器内核开发中80%，现在已经支持模式切换）
+开发状态：pending...歌曲列表开发中......（播放器内核已经开发完毕！）
 
 **现存BUG：**
 
