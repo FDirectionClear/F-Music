@@ -19,4 +19,4 @@
 
 **功能待改进**
 
-* tools中的translateVal适应性不强，也不够健壮。
+* tools中的translateVal方法适应性不强，也不够健壮。
