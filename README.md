@@ -7,16 +7,6 @@
 
 核心技术栈： VueJS + Vuex + Vue-router + Webpack + 极少量JQuery + github上的一些开源工具 + 本人全力质量coding。(并没有使用Vue-cli，自己原生配置webpack)
 
-开发状态：pending...歌曲列表开发中......（播放器内核已经开发完毕！）
+开发状态：播放器内核已经开发完毕！
 
-**现存BUG：**
 
-* 暂仅发现轮播图存在BUG。
-
-**性能待改进:**
-
-* singer-detail中下拉和上划速度过快会出现白色条装不明物体。并且不够顺滑。可能是浏览器分层过多导致合并速度慢。
-
-**功能待改进**
-
-* tools中的translateVal方法适应性不强，也不够健壮。
