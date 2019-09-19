@@ -9,4 +9,12 @@
 
 开发状态：播放器内核已经开发完毕！
 
-
+# 成果演示
+![avatar](http://baidu.com/pic/doge.png)
+![avatar](http://baidu.com/pic/doge.png)
+![avatar](http://baidu.com/pic/doge.png)
+![avatar](http://baidu.com/pic/doge.png)
+![avatar](http://baidu.com/pic/doge.png)
+![avatar](http://baidu.com/pic/doge.png)
+![avatar](http://baidu.com/pic/doge.png)
+![avatar](http://baidu.com/pic/doge.png)
