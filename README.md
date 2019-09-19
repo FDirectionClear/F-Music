@@ -10,11 +10,11 @@
 开发状态：播放器内核已经开发完毕！
 
 # 成果演示
-![avatar](http://baidu.com/pic/doge.png)
-![avatar](http://baidu.com/pic/doge.png)
-![avatar](http://baidu.com/pic/doge.png)
-![avatar](http://baidu.com/pic/doge.png)
-![avatar](http://baidu.com/pic/doge.png)
-![avatar](http://baidu.com/pic/doge.png)
-![avatar](http://baidu.com/pic/doge.png)
-![avatar](http://baidu.com/pic/doge.png)
+![推荐页](./recommend.gif)
+![歌手列表页1](./singer1.gif)
+![歌手列表页2](./singer2.gif)
+![专辑详情页](./singerdetail1.gif)
+![播放器组件的进退特效与歌词特效](./player1.gif)
+![歌词自动滚动](./player2.gif)
+![进度条拖拽效果](./player3.gif)
+![单曲循环，随机播放，列表循环模式切换](./player4.gif)
