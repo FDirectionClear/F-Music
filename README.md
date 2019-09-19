@@ -17,4 +17,4 @@
 ![播放器组件的进退特效与歌词特效](./screenshot/player1.gif)
 ![歌词自动滚动](./screenshot/player2.gif)
 ![进度条拖拽效果](./screenshot/player3.gif)
-![单曲循环，随机播放，列表循环模式切换](./player4.gif)
+![单曲循环，随机播放，列表循环模式切换](./screenshot/player4.gif)
