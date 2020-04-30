@@ -56,7 +56,7 @@
     "create-keyframe-animation": "^0.1.0",
     "express": "^4.17.1",
     "fastclick": "^1.0.6",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "js-base64": "^2.5.1",
     "jsonp": "^0.2.1",
     "vue": "^2.6.10",
